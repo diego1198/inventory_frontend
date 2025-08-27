@@ -27,4 +27,4 @@ COPY --from=builder /app/node_modules ./node_modules
 
 EXPOSE 3000
 
-CMD ["npm", "run", "start"]
+CMD echo "SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL SUPABASE_KEY=$NEXT_PUBLIC_SUPABASE_KEY" && npm run start
