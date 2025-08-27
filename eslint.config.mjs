@@ -19,6 +19,13 @@ const eslintConfig = [
       "build/**",
       "next-env.d.ts",
     ],
+    rules: {
+      "prettier/prettier": ["error", { endOfLine: "auto" }],
+      "@next/next/no-html-link-for-pages": "off",
+    },
+  },
+  {
+    plugins: { prettier: require("eslint-plugin-prettier") },
   },
 ];
 

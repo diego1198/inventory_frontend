@@ -1,8 +1,16 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Inventory & Billing MVP frontend (Next.js + TS).
 
 ## Getting Started
 
-First, run the development server:
+Env variables required:
+
+```
+NEXT_PUBLIC_API_URL=http://localhost:3000
+NEXT_PUBLIC_SUPABASE_URL=your_url
+NEXT_PUBLIC_SUPABASE_KEY=your_key
+```
+
+Run the development server:
 
 ```bash
 npm run dev
