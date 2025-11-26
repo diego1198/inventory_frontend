@@ -13,7 +13,7 @@ interface SaleItemsProps {
 
 export default function SaleItems({ items, onRemoveItem, onUpdateQuantity }: SaleItemsProps) {
   const calculateSubtotal = (item: SaleItem & { product: Product }) => {
-    return item.product.price * item.quantity;
+    return item.product.salePrice * item.quantity;
   };
 
   const calculateTotal = () => {
@@ -52,26 +52,26 @@ export default function SaleItems({ items, onRemoveItem, onUpdateQuantity }: Sal
                 <div className="text-sm text-muted-foreground">{item.product.description}</div>
               )}
               <div className="text-sm text-muted-foreground">
-                Categoría: {item.product.category || 'Sin categoría'}
+                Categoría: {typeof item.product.category === 'object' ? item.product.category?.name : item.product.category || 'Sin categoría'}
               </div>
             </div>
-            
+
             <div className="flex items-center gap-4">
               <div className="text-right">
-                <div className="font-medium">${item.product.price}</div>
+                <div className="font-medium">${item.product.salePrice}</div>
                 <div className="text-sm text-muted-foreground">Precio unitario</div>
               </div>
-              
+
               <div className="text-center">
                 <div className="font-medium">{item.quantity}</div>
                 <div className="text-sm text-muted-foreground">Cantidad</div>
               </div>
-              
+
               <div className="text-right">
                 <div className="font-medium text-primary">${calculateSubtotal(item).toFixed(2)}</div>
                 <div className="text-sm text-muted-foreground">Subtotal</div>
               </div>
-              
+
               <div className="flex items-center gap-2">
                 <Button
                   variant="outline"
@@ -85,7 +85,7 @@ export default function SaleItems({ items, onRemoveItem, onUpdateQuantity }: Sal
                 >
                   <Edit className="h-4 w-4" />
                 </Button>
-                
+
                 <Button
                   variant="destructive"
                   size="sm"

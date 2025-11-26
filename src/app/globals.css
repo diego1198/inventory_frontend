@@ -45,6 +45,22 @@
 
 :root {
   --radius: 0.625rem;
+
+  /* Parametrizable Color System */
+  --primary-gradient-start: #8b5cf6;
+  --primary-gradient-end: #3b82f6;
+  --secondary-gradient-start: #06b6d4;
+  --secondary-gradient-end: #3b82f6;
+
+  --sidebar-bg: #1e293b;
+  --sidebar-hover: #334155;
+  --sidebar-active: #475569;
+  --sidebar-text: #e2e8f0;
+  --sidebar-text-muted: #94a3b8;
+
+  --card-bg: #ffffff;
+  --card-border: #e2e8f0;
+
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -79,6 +95,13 @@
 }
 
 .dark {
+  --sidebar-bg: #0f172a;
+  --sidebar-hover: #1e293b;
+  --sidebar-active: #334155;
+
+  --card-bg: #1e293b;
+  --card-border: #334155;
+
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
@@ -116,7 +139,40 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  @keyframes blob {
+    0% {
+      transform: translate(0px, 0px) scale(1);
+    }
+
+    33% {
+      transform: translate(30px, -50px) scale(1.1);
+    }
+
+    66% {
+      transform: translate(-20px, 20px) scale(0.9);
+    }
+
+    100% {
+      transform: translate(0px, 0px) scale(1);
+    }
+  }
+
+  .animate-blob {
+    animation: blob 7s infinite;
+  }
+
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+
+  .animation-delay-4000 {
+    animation-delay: 4s;
   }
 }

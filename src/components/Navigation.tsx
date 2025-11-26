@@ -3,43 +3,43 @@
 import { usePathname, useRouter } from "next/navigation";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { 
-  LayoutDashboard, 
-  Package, 
-  ShoppingCart, 
-  BarChart3, 
+import {
+  LayoutDashboard,
+  Package,
+  ShoppingCart,
+  BarChart3,
   LogOut,
   Home
 } from "lucide-react";
 
 const navigationItems = [
-  { 
-    value: "/", 
-    label: "Inicio", 
+  {
+    value: "/",
+    label: "Inicio",
     icon: Home,
     description: "Página principal"
   },
-  { 
-    value: "/dashboard", 
-    label: "Dashboard", 
+  {
+    value: "/dashboard",
+    label: "Dashboard",
     icon: LayoutDashboard,
     description: "Panel de control"
   },
-  { 
-    value: "/products", 
-    label: "Productos", 
+  {
+    value: "/products",
+    label: "Productos",
     icon: Package,
     description: "Gestión de inventario"
   },
-  { 
-    value: "/sales", 
-    label: "Ventas", 
+  {
+    value: "/sales",
+    label: "Ventas",
     icon: ShoppingCart,
     description: "Registro de ventas"
   },
-  { 
-    value: "/reports", 
-    label: "Reportes", 
+  {
+    value: "/reports",
+    label: "Reportes",
     icon: BarChart3,
     description: "Análisis y reportes"
   }
@@ -85,8 +85,8 @@ export default function Navigation() {
               {navigationItems.map((item) => {
                 const Icon = item.icon;
                 return (
-                  <TabsTrigger 
-                    key={item.value} 
+                  <TabsTrigger
+                    key={item.value}
                     value={item.value}
                     className="flex flex-col items-center space-y-1 px-2 py-1 h-auto"
                   >
@@ -99,9 +99,9 @@ export default function Navigation() {
           </Tabs>
 
           {/* Botón de logout */}
-          <Button 
-            variant="outline" 
-            size="sm" 
+          <Button
+            variant="outline"
+            size="sm"
             onClick={handleLogout}
             className="flex items-center space-x-2"
           >

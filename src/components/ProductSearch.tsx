@@ -94,7 +94,7 @@ export default function ProductSearch({ products, onAddProduct }: ProductSearchP
                 {product.description}
               </div>
               <div className="text-sm font-medium text-primary">
-                ${product.price} - Stock: {product.stock}
+                ${product.salePrice} - Stock: {product.stock}
               </div>
             </div>
           ))}
@@ -110,7 +110,7 @@ export default function ProductSearch({ products, onAddProduct }: ProductSearchP
               <X className="h-4 w-4" />
             </Button>
           </div>
-          
+
           <div className="space-y-2">
             <div>
               <span className="font-medium">{selectedProduct.name}</span>
@@ -118,12 +118,12 @@ export default function ProductSearch({ products, onAddProduct }: ProductSearchP
                 <p className="text-sm text-muted-foreground">{selectedProduct.description}</p>
               )}
             </div>
-            
+
             <div className="flex items-center gap-4 text-sm">
-              <span className="font-medium text-primary">${selectedProduct.price}</span>
+              <span className="font-medium text-primary">${selectedProduct.salePrice}</span>
               <span>Stock disponible: {selectedProduct.stock}</span>
             </div>
-            
+
             <div className="flex items-center gap-3">
               <div className="space-y-1">
                 <Label htmlFor="quantity">Cantidad</Label>
@@ -137,9 +137,9 @@ export default function ProductSearch({ products, onAddProduct }: ProductSearchP
                   className="w-20"
                 />
               </div>
-              
+
               <div className="text-sm">
-                <div>Subtotal: ${(selectedProduct.price * quantity).toFixed(2)}</div>
+                <div>Subtotal: ${(selectedProduct.salePrice * quantity).toFixed(2)}</div>
                 <div className="text-muted-foreground">
                   {quantity > selectedProduct.stock && (
                     <span className="text-destructive">Cantidad excede el stock disponible</span>
@@ -147,9 +147,9 @@ export default function ProductSearch({ products, onAddProduct }: ProductSearchP
                 </div>
               </div>
             </div>
-            
-            <Button 
-              onClick={handleAddProduct} 
+
+            <Button
+              onClick={handleAddProduct}
               disabled={quantity <= 0 || quantity > selectedProduct.stock}
               className="w-full"
             >

@@ -2,13 +2,17 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api";
 import { ApiResponse } from "@/types/api";
 
+import { Category } from "@/types";
+
 export type Product = {
   id: string;
   name: string;
   description?: string;
-  price: number;
+  purchasePrice: number;
+  salePrice: number;
   stock: number;
-  category?: string;
+  category?: Category;
+  categoryId?: string;
   isActive?: boolean;
 };
 

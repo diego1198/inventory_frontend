@@ -13,6 +13,16 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+// Response interceptor for error handling
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    // You can add global error handling here if needed
+    // For now, we'll just pass the error through to be handled by individual components
+    return Promise.reject(error);
+  }
+);
+
 export type PaginatedResponse<T> = {
   data: T[];
   total: number;

@@ -9,7 +9,7 @@ export type User = {
   email: string;
   firstName: string;
   lastName: string;
-  role: "admin" | "cashier";
+  role: "superadmin" | "admin" | "cashier";
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
@@ -18,14 +18,6 @@ export type User = {
 export type LoginCredentials = {
   email: string;
   password: string;
-};
-
-export type RegisterCredentials = {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  role?: "admin" | "cashier";
 };
 
 type AuthResponse = {
@@ -52,41 +44,15 @@ export function useLogin() {
       console.log(data);
       if (data.access_token) {
         localStorage.setItem("access_token", data.access_token);
+        localStorage.setItem("user", JSON.stringify(data.user));
         document.cookie = `access_token=${data.access_token}; path=/; SameSite=Lax`;
       }
-      
+
       qc.setQueryData(["user"], data.user);
       toast.success("Sesión iniciada");
     },
     onError: (error: any) => {
       toast.error(error?.message || "Error al iniciar sesión");
-    },
-  });
-}
-
-export function useRegister() {
-  return useMutation({
-    mutationFn: async (credentials: RegisterCredentials) => {
-      try {
-        // Try NestJS auth first
-        const { data } = await api.post<ApiResponse<AuthResponse>>("/auth/register", credentials);
-        return { access_token: data.data.access_token, user: data.data.user, source: "nestjs" as const };
-      } catch (error) {
-        // Fallback to Supabase
-        const { data, error: supabaseError } = await supabase.auth.signUp(credentials);
-        if (supabaseError) throw supabaseError;
-        return { access_token: data.session?.access_token, user: data.user, source: "supabase" as const };
-      }
-    },
-    onSuccess: (data) => {
-      if (data.access_token) {
-        localStorage.setItem("access_token", data.access_token);
-        document.cookie = `access_token=${data.access_token}; path=/; SameSite=Lax`;
-      }
-      toast.success("Usuario registrado exitosamente");
-    },
-    onError: (error: any) => {
-      toast.error(error?.message || "Error al registrar usuario");
     },
   });
 }

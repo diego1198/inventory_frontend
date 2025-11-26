@@ -1,13 +1,14 @@
 "use client";
 
 import { useMonthlyReport } from "@/hooks/useReports";
-import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from "recharts";
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { TrendingUp, DollarSign, Receipt } from "lucide-react";
+import { DashboardLayout } from "@/components/DashboardLayout";
 
 export default function ReportsPage() {
   const { data: monthly } = useMonthlyReport();
-  
-  // Transform the data to match the chart requirements
+
   const chartData = monthly?.data ? [
     {
       name: `${monthly.data.month}/${monthly.data.year}`,
@@ -18,58 +19,161 @@ export default function ReportsPage() {
   ] : [];
 
   return (
-    <div className="p-4 space-y-4">
-      <h1 className="text-2xl font-semibold">Reportes</h1>
-      
-      <Card>
-        <CardHeader>
-          <CardTitle>Reporte Mensual</CardTitle>
-        </CardHeader>
-        <CardContent className="h-96">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={chartData}>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="ingresos" fill="#3b82f6" />
-            </BarChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
-      
-      {/* Summary of monthly data */}
-      {monthly?.data && (
-        <div className="grid gap-4 md:grid-cols-3">
-          <Card>
-            <CardHeader>
-              <CardTitle>Total Ventas del Mes</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-2xl font-bold">{monthly.data.totalSales}</p>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardHeader>
-              <CardTitle>Total Ingresos del Mes</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-2xl font-bold">${monthly.data.totalRevenue}</p>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardHeader>
-              <CardTitle>Total Impuestos del Mes</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-2xl font-bold">${monthly.data.totalTax}</p>
-            </CardContent>
-          </Card>
+    <DashboardLayout>
+      <div className="p-4 sm:p-6 lg:p-8 min-h-screen" style={{ backgroundColor: "#f8fafc" }}>
+        {/* Header */}
+        <div className="mb-4 sm:mb-6 lg:mb-8">
+          <h1
+            className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2"
+            style={{
+              background: `linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end))`,
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text"
+            }}
+          >
+            Reportes
+          </h1>
+          <p className="text-slate-600">
+            Análisis de ventas e ingresos mensuales
+          </p>
         </div>
-      )}
-    </div>
+
+        {/* Summary Cards */}
+        {monthly?.data && (
+          <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mb-4 sm:mb-6 lg:mb-8">
+            <Card
+              className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] overflow-hidden"
+              style={{ backgroundColor: "var(--card-bg)" }}
+            >
+              <div
+                className="h-2 w-full"
+                style={{
+                  background: `linear-gradient(90deg, #3b82f6, #2563eb)`
+                }}
+              />
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-sm font-medium text-slate-600">
+                  Total Ventas del Mes
+                </CardTitle>
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center"
+                  style={{
+                    background: `linear-gradient(135deg, #3b82f6, #2563eb)`,
+                    boxShadow: "0 4px 14px 0 rgba(59, 130, 246, 0.39)"
+                  }}
+                >
+                  <TrendingUp className="w-6 h-6 text-white" />
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="text-3xl font-bold text-slate-900">{monthly.data.totalSales}</div>
+                <p className="text-xs text-slate-500 mt-1">Transacciones completadas</p>
+              </CardContent>
+            </Card>
+
+            <Card
+              className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] overflow-hidden"
+              style={{ backgroundColor: "var(--card-bg)" }}
+            >
+              <div
+                className="h-2 w-full"
+                style={{
+                  background: `linear-gradient(90deg, #10b981, #059669)`
+                }}
+              />
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-sm font-medium text-slate-600">
+                  Total Ingresos del Mes
+                </CardTitle>
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center"
+                  style={{
+                    background: `linear-gradient(135deg, #10b981, #059669)`,
+                    boxShadow: "0 4px 14px 0 rgba(16, 185, 129, 0.39)"
+                  }}
+                >
+                  <DollarSign className="w-6 h-6 text-white" />
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="text-3xl font-bold text-slate-900">
+                  ${monthly.data.totalRevenue.toFixed(2)}
+                </div>
+                <p className="text-xs text-slate-500 mt-1">Total generado</p>
+              </CardContent>
+            </Card>
+
+            <Card
+              className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] overflow-hidden"
+              style={{ backgroundColor: "var(--card-bg)" }}
+            >
+              <div
+                className="h-2 w-full"
+                style={{
+                  background: `linear-gradient(90deg, var(--primary-gradient-start), var(--primary-gradient-end))`
+                }}
+              />
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-sm font-medium text-slate-600">
+                  Total Impuestos del Mes
+                </CardTitle>
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center"
+                  style={{
+                    background: `linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end))`,
+                    boxShadow: "0 4px 14px 0 rgba(139, 92, 246, 0.39)"
+                  }}
+                >
+                  <Receipt className="w-6 h-6 text-white" />
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="text-3xl font-bold text-slate-900">
+                  ${monthly.data.totalTax.toFixed(2)}
+                </div>
+                <p className="text-xs text-slate-500 mt-1">Impuestos recaudados</p>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+
+        {/* Chart */}
+        <Card
+          className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300"
+          style={{ backgroundColor: "var(--card-bg)" }}
+        >
+          <CardHeader>
+            <CardTitle className="text-xl font-semibold text-slate-900">
+              Reporte Mensual
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="h-64 sm:h-80 lg:h-96">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" className="stroke-slate-200" />
+                <XAxis dataKey="name" className="text-sm" />
+                <YAxis className="text-sm" />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: 'rgba(255, 255, 255, 0.98)',
+                    border: 'none',
+                    borderRadius: '12px',
+                    boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'
+                  }}
+                />
+                <Bar dataKey="ingresos" fill="url(#greenGradient)" radius={[8, 8, 0, 0]} />
+                <defs>
+                  <linearGradient id="greenGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#10b981" />
+                    <stop offset="100%" stopColor="#059669" />
+                  </linearGradient>
+                </defs>
+              </BarChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+      </div>
+    </DashboardLayout>
   );
 }
-
-
