@@ -39,19 +39,36 @@ export function Sidebar({ className }: SidebarProps) {
       </div>
       <div className="flex-1 px-3 py-2">
         <div className="space-y-1">
-          {navigation.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground transition-colors",
-                pathname === item.href ? "bg-accent text-accent-foreground" : "transparent"
-              )}
-            >
-              <item.icon className="mr-2 h-4 w-4" />
-              {item.title}
-            </Link>
-          ))}
+          {navigation.map((item) => {
+            let isActive = item.href === "/" 
+                ? pathname === "/" 
+                : (pathname === item.href || pathname.startsWith(`${item.href}/`));
+            
+            // Special handling for sales to avoid conflict with sales/new
+            if (item.href === "/sales" && pathname === "/sales/new") {
+                isActive = false;
+            }
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors mb-1",
+                  isActive
+                    ? item.variant === "highlight"
+                      ? "bg-primary text-primary-foreground shadow-md hover:bg-primary/90"
+                      : "bg-slate-200 text-slate-900 font-bold dark:bg-slate-800 dark:text-slate-50"
+                    : item.variant === "highlight"
+                    ? "border-2 border-primary text-primary hover:bg-primary/10"
+                    : "text-muted-foreground hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-50"
+                )}
+              >
+                <item.icon className={cn("mr-2 h-4 w-4", isActive ? "text-current" : "opacity-70")} />
+                {item.title}
+              </Link>
+            );
+          })}
         </div>
       </div>
       

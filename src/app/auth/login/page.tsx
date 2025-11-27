@@ -11,7 +11,7 @@ import { Package, Lock, Mail } from "lucide-react";
 function LoginForm() {
   const router = useRouter();
   const search = useSearchParams();
-  const redirect = search.get("redirect") || "/dashboard";
+  const redirect = search.get("redirect") || "/reports";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 

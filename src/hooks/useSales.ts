@@ -3,23 +3,44 @@ import { api } from "@/lib/api";
 import { ApiResponse } from "@/types/api";
 
 export type SaleItem = { 
+  id: string;
   productId: string; 
   quantity: number; 
+  unitPrice: number;
+  total: number;
+  product: {
+    name: string;
+    description?: string;
+  };
 };
 
 export type CreateSalePayload = {
-  items: SaleItem[];
+  items: { productId: string; quantity: number }[];
   notes?: string;
 };
 
 export type Sale = { 
   id: string; 
-  items: SaleItem[]; 
+  invoiceNumber: string;
+  subtotal: number;
+  tax: number;
   total: number; 
-  notes?: string;
+  status: string;
+  notes?: string; 
   createdAt: string; 
+  user?: {
+    firstName: string;
+    lastName: string;
+  };
+  customer?: {
+    name: string;
+    documentNumber: string;
+    email?: string;
+    phone?: string;
+    address?: string;
+  };
+  items: SaleItem[];
 };
-
 export function useSales() {
   return useQuery({
     queryKey: ["sales"],

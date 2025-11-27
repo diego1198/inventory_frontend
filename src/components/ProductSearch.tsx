@@ -26,7 +26,9 @@ export default function ProductSearch({ products, onAddProduct }: ProductSearchP
 
     const filtered = products.filter(product =>
       product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.description?.toLowerCase().includes(searchTerm.toLowerCase())
+      product.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.code?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.brand?.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredProducts(filtered);
   }, [searchTerm, products]);
@@ -89,8 +91,12 @@ export default function ProductSearch({ products, onAddProduct }: ProductSearchP
               className="p-3 border-b last:border-b-0 hover:bg-muted/50 cursor-pointer"
               onClick={() => handleProductSelect(product)}
             >
-              <div className="font-medium">{product.name}</div>
+              <div className="font-medium">
+                {product.name} 
+                {product.brand && <span className="ml-2 text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded">{product.brand}</span>}
+              </div>
               <div className="text-sm text-muted-foreground">
+                {product.code && <span className="font-mono text-xs mr-2">[{product.code}]</span>}
                 {product.description}
               </div>
               <div className="text-sm font-medium text-primary">

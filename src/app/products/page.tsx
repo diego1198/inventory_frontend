@@ -29,6 +29,8 @@ export default function ProductsPage() {
   const [form, setForm] = useState({
     name: "",
     description: "",
+    code: "",
+    brand: "",
     purchasePrice: 0,
     salePrice: 0,
     stock: 0,
@@ -53,6 +55,8 @@ export default function ProductsPage() {
     setForm({
       name: "",
       description: "",
+      code: "",
+      brand: "",
       purchasePrice: 0,
       salePrice: 0,
       stock: 0,
@@ -159,7 +163,12 @@ export default function ProductsPage() {
         {/* Products Grid */}
         <div className="grid gap-4">
           {(products || [])
-            .filter(p => p.name.toLowerCase().includes(search.toLowerCase()))
+            .filter(p => 
+              p.name.toLowerCase().includes(search.toLowerCase()) ||
+              p.description?.toLowerCase().includes(search.toLowerCase()) ||
+              p.code?.toLowerCase().includes(search.toLowerCase()) ||
+              p.brand?.toLowerCase().includes(search.toLowerCase())
+            )
             .map((p) => (
               <Card
                 key={p.id}
@@ -178,8 +187,14 @@ export default function ProductsPage() {
                       <Package className="w-6 h-6 text-white" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="font-semibold text-base sm:text-lg text-slate-900">{p.name}</div>
-                      {p.description && <div className="text-sm text-slate-600 mt-1">{p.description}</div>}
+                      <div className="font-semibold text-base sm:text-lg text-slate-900">
+                        {p.name}
+                        {p.brand && <span className="ml-2 text-sm font-normal text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full">{p.brand}</span>}
+                      </div>
+                      <div className="text-sm text-slate-600 mt-1">
+                        {p.code && <span className="font-mono text-xs bg-slate-100 px-1.5 py-0.5 rounded mr-2">{p.code}</span>}
+                        {p.description}
+                      </div>
                       <div className="flex flex-wrap gap-2 sm:gap-4 text-xs sm:text-sm text-slate-500 mt-2">
                         <span className="font-medium" title="Precio de Venta">${p.salePrice}</span>
                         <span className="text-slate-400 text-xs" title="Precio de Compra Promedio">(${p.purchasePrice})</span>
@@ -218,6 +233,8 @@ export default function ProductsPage() {
                           setForm({
                             name: p.name,
                             description: p.description || "",
+                            code: p.code || "",
+                            brand: p.brand || "",
                             purchasePrice: p.purchasePrice,
                             salePrice: p.salePrice,
                             stock: p.stock,
@@ -290,6 +307,28 @@ export default function ProductsPage() {
                   onChange={(e) => setForm({ ...form, description: e.target.value })}
                   className="border-slate-300 focus:border-purple-500 focus:ring-purple-500/20"
                 />
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="code">Código / Nomenclatura</Label>
+                  <Input
+                    id="code"
+                    placeholder="Ej: SKU-123"
+                    value={form.code}
+                    onChange={(e) => setForm({ ...form, code: e.target.value })}
+                    className="border-slate-300 focus:border-purple-500 focus:ring-purple-500/20"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="brand">Marca</Label>
+                  <Input
+                    id="brand"
+                    placeholder="Ej: Sony, Nike, Bosch"
+                    value={form.brand}
+                    onChange={(e) => setForm({ ...form, brand: e.target.value })}
+                    className="border-slate-300 focus:border-purple-500 focus:ring-purple-500/20"
+                  />
+                </div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">

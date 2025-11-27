@@ -1,4 +1,4 @@
-import { LucideIcon, LayoutDashboard, Package, ShoppingCart, FileText, Users, Tag, ClipboardList } from "lucide-react";
+import { LucideIcon, Package, ShoppingCart, FileText, Users, Tag, ClipboardList, PlusCircle, Contact } from "lucide-react";
 
 export type UserRole = "superadmin" | "admin" | "cashier";
 
@@ -7,6 +7,7 @@ export interface NavigationItem {
     icon: LucideIcon;
     href: string;
     allowedRoles: UserRole[];
+    variant?: "default" | "highlight";
 }
 
 /**
@@ -22,10 +23,17 @@ export interface NavigationItem {
  */
 export const navigationConfig: NavigationItem[] = [
     {
-        title: "Dashboard",
-        icon: LayoutDashboard,
-        href: "/dashboard",
+        title: "Nueva factura",
+        icon: PlusCircle,
+        href: "/sales/new",
         allowedRoles: ["superadmin", "admin", "cashier"],
+        variant: "highlight",
+    },
+    {
+        title: "Categorías",
+        icon: Tag,
+        href: "/categories",
+        allowedRoles: ["superadmin"],
     },
     {
         title: "Productos",
@@ -34,10 +42,10 @@ export const navigationConfig: NavigationItem[] = [
         allowedRoles: ["superadmin", "admin", "cashier"],
     },
     {
-        title: "Inventario",
-        icon: ClipboardList,
-        href: "/inventory",
-        allowedRoles: ["superadmin", "admin"],
+        title: "Clientes",
+        icon: Contact,
+        href: "/customers",
+        allowedRoles: ["superadmin", "admin", "cashier"],
     },
     {
         title: "Ventas",
@@ -52,16 +60,16 @@ export const navigationConfig: NavigationItem[] = [
         allowedRoles: ["superadmin", "admin"],
     },
     {
+        title: "Inventario",
+        icon: ClipboardList,
+        href: "/inventory",
+        allowedRoles: ["superadmin", "admin"],
+    },
+    {
         title: "Usuarios",
         icon: Users,
         href: "/users",
         allowedRoles: ["superadmin", "admin"],
-    },
-    {
-        title: "Categorías",
-        icon: Tag,
-        href: "/categories",
-        allowedRoles: ["superadmin"],
     },
 ];
 

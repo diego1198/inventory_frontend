@@ -2,17 +2,22 @@
 
 import { Button } from "@/components/ui/button";
 import { Product } from "@/hooks/useProducts";
-import { SaleItem } from "@/hooks/useSales";
 import { Trash2, Edit } from "lucide-react";
 
+export interface CartItem {
+  productId: string;
+  quantity: number;
+  product: Product;
+}
+
 interface SaleItemsProps {
-  items: Array<SaleItem & { product: Product }>;
+  items: CartItem[];
   onRemoveItem: (index: number) => void;
   onUpdateQuantity: (index: number, quantity: number) => void;
 }
 
 export default function SaleItems({ items, onRemoveItem, onUpdateQuantity }: SaleItemsProps) {
-  const calculateSubtotal = (item: SaleItem & { product: Product }) => {
+  const calculateSubtotal = (item: CartItem) => {
     return item.product.salePrice * item.quantity;
   };
 

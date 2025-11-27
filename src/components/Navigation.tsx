@@ -4,7 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import {
-  LayoutDashboard,
+  Tag,
   Package,
   ShoppingCart,
   BarChart3,
@@ -20,10 +20,10 @@ const navigationItems = [
     description: "Página principal"
   },
   {
-    value: "/dashboard",
-    label: "Dashboard",
-    icon: LayoutDashboard,
-    description: "Panel de control"
+    value: "/categories",
+    label: "Categorías",
+    icon: Tag,
+    description: "Gestión de categorías"
   },
   {
     value: "/products",

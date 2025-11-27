@@ -33,7 +33,7 @@ export default function CategoriesPage() {
                 const user = JSON.parse(userStr);
                 if (user.role !== "superadmin") {
                     toast.error("No tienes permisos para acceder a esta página");
-                    router.push("/dashboard");
+                    router.push("/products");
                 }
             } catch (e) {
                 router.push("/auth/login");
